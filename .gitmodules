@@ -1,0 +1,3 @@
+[submodule "STATIC/AdminLTE"]
+	path = STATIC/AdminLTE
+	url = https://github.com/almasaeed2010/AdminLTE.git

@@ -1,0 +1,93 @@
+{% extends "base_form.html" %}
+{% block upload_form %}
+    <div class="register-box">
+        <div class="register-logo">
+            <h1>
+                <b>注册</b>
+                <small>Preview</small>
+            </h1>
+        </div>
+
+        <div class="register-box-body">
+            <form action="register" method="post">
+                {% csrf_token %}
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" placeholder="Full name" name="FullName" id="FullName"
+                           pattern="^\w{4,20}$"
+                           required oninvalid="this.setCustomValidity('4~20字母数字或下划线');" oninput="setCustomValidity('')">
+                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="email" class="form-control" placeholder="Email" name="Email" id="Email" required>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="Password" name="Password" id="Password"
+                           pattern="^[a-zA-Z0-9]\w{5,19}$"
+                           required oninvalid="this.setCustomValidity('6~20字母数字或下划线');" oninput="setCustomValidity('')"
+                           onchange="checkPassword()">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="Retype password"
+                           id="Repassword"
+                           required onchange="checkPassword()">
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" id="Agree" required
+                                       oninvalid="this.setCustomValidity('同意此协议以继续');"> I agree to the <a
+                                    href="#">terms</a>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <a href="login" class="text-center">已有账户？去登陆</a>
+        </div>
+        <!-- /.form-box -->
+    </div>
+
+    <script>
+
+        function checkPassword() {
+            var pass1 = document.getElementById("Password");
+            var pass2 = document.getElementById("Repassword");
+
+            if (pass1.value != pass2.value)
+                pass2.setCustomValidity("两次输入的密码不匹配");
+            else
+                pass2.setCustomValidity("");
+        }
+
+
+    </script>
+
+{% endblock %}
+
+{% block chackbox_js %}
+    <script>
+        $('input').on('ifChanged', function (event) { //ifCreated 事件应该在插件初始化之前绑定
+            var box = document.getElementById("Agree");
+            box.setCustomValidity('');
+        });
+
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+
+    </script>
+{% endblock %}
